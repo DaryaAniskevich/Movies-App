@@ -1,0 +1,98 @@
+.container {
+  padding: 55px 0;
+  background-color: black;
+  text-transform: uppercase;
+  color: var(--main-white-color);
+}
+
+.header {
+  font-size: 24px;
+  line-height: 24px;
+  font-weight: 500;
+  margin-bottom: 30px;
+}
+
+.input {
+  width: 100%;
+  padding: 20px 30px;
+  background-color: var(--default-back-color);
+  border: none;
+  border-bottom: 2px solid var(--main-red-color);
+  font-size: 16px;
+  color: var(--main-white-color);
+  outline: none;
+  margin-bottom: 20px;
+  background-image: url("./arrow.svg");
+  background-size: 25px;
+  background-repeat: no-repeat;
+  background-position: 99% 50%;
+}
+.buttons_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.buttons_left {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 300px;
+}
+
+.header_search {
+  margin-bottom: 0;
+  font-size: 20px;
+  line-height: 20px;
+}
+.button {
+  text-transform: uppercase;
+  padding: 7px 20px;
+  border: none;
+  border-radius: 3px;
+  font-size: 14px;
+  line-height: 14px;
+  background-color: var(--main-not-active-button);
+  color: var(--main-white-color);
+}
+
+.button:hover {
+  background-color: var(--main-white-color);
+  color: var(--main-not-active-button);
+}
+
+.button:active {
+  background-color: var(--main-not-active-button);
+  color: var(--main-white-color);
+}
+
+.button_active {
+  background-color: var(--main-red-color);
+}
+
+.button_active:hover {
+  background-color: var(--main-white-color);
+  color: var(--main-red-color);
+}
+
+.button_active:active {
+  color: var(--main-white-color);
+  background-color: var(--main-red-color);
+}
+.button_search {
+  background-color: var(--main-red-color);
+  padding: 10px 60px;
+  font-size: 16px;
+  line-height: 16px;
+}
+
+.button_search:hover {
+  background-color: var(--main-white-color);
+  color: var(--main-red-color);
+}
+
+.button_search:active {
+  color: var(--main-white-color);
+  background-color: var(--main-red-color);
+}

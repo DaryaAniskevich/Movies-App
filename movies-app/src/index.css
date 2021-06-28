@@ -1,6 +1,7 @@
 * {
   padding: 0;
   margin: 0;
+  box-sizing: border-box;
 }
 
 body {
@@ -19,4 +20,8 @@ code {
 
 :root {
   --main-red-color: #f25262;
+  --main-white-color: #fffdff;
+  --default-back-color: #000000;
+  --main-black-color: #3f3f3f;
+  --main-not-active-button: #383939;
 }
