@@ -1,6 +1,5 @@
 .container {
-  padding: 55px 0;
-  background-color: black;
+  padding: 55px 0 35px;
   text-transform: uppercase;
   color: var(--main-white-color);
 }
