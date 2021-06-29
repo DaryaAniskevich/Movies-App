@@ -11,6 +11,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 20px;
+  line-height: 20px;
+  color: var(--main-black-color);
 }
 
 code {
@@ -24,4 +26,5 @@ code {
   --default-back-color: #000000;
   --main-black-color: #3f3f3f;
   --main-not-active-button: #383939;
+  --main-gray-color: #f5f4f5;
 }
