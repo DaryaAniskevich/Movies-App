@@ -4,12 +4,13 @@ import MovieCard from "./MovieCard";
 import { useDispatch, useSelector } from "react-redux";
 import { getMoviesData } from "../../store/moviesActions";
 import { useEffect } from "react";
+import { moviesSelector, moviesIsLoadingSelector } from "../../store/selectors";
 
 const Results = () => {
   const dispatch = useDispatch();
 
-  const movies = useSelector((state) => state.movies.movies);
-  const moviesIsLoading = useSelector((state) => state.movies.isLoading);
+  const movies = useSelector(moviesSelector);
+  const moviesIsLoading = useSelector(moviesIsLoadingSelector);
 
   useEffect(() => {
     dispatch(getMoviesData());
@@ -22,7 +23,15 @@ const Results = () => {
         {moviesIsLoading ? (
           <div>Loading...</div>
         ) : (
-          movies.map((movie, i) => <MovieCard key={movie.id} />)
+          movies.map((movie) => (
+            <MovieCard
+              key={movie.id}
+              title={movie.title}
+              release={movie.release_date}
+              image={movie.poster_path}
+              genres={movie.genres}
+            />
+          ))
         )}
       </div>
     </div>
