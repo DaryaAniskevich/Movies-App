@@ -43,6 +43,9 @@
 }
 
 .release {
+  max-width: 100px;
+  width: 100%;
+  white-space: nowrap;
   font-size: 16px;
   line-height: 16px;
   border: 1px solid var(--main-black-color);
