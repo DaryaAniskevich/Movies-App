@@ -1,5 +1,13 @@
 const Button = (props) => {
-  return <button className={props.className}>{props.children}</button>;
+  return (
+    <button
+      type={props.type}
+      className={props.className}
+      onClick={props.onClick}
+    >
+      {props.children}
+    </button>
+  );
 };
 
 export default Button;

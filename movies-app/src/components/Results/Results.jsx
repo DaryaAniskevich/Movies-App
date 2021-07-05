@@ -1,29 +1,16 @@
 import style from "./Results.module.css";
 import ResultsTopBar from "./ResultsTopBar";
 import MovieCard from "./MovieCard";
-import { useDispatch, useSelector } from "react-redux";
-import { getMoviesData } from "../../store/moviesActions";
-import { useEffect } from "react";
-import { moviesSelector, moviesIsLoadingSelector } from "../../store/selectors";
 
-const Results = () => {
-  const dispatch = useDispatch();
-
-  const movies = useSelector(moviesSelector);
-  const moviesIsLoading = useSelector(moviesIsLoadingSelector);
-
-  useEffect(() => {
-    dispatch(getMoviesData());
-  }, [dispatch]);
-
+const Results = (props) => {
   return (
     <div className={style.results}>
-      <ResultsTopBar />
+      <ResultsTopBar foundMovies={props.foundMovies} />
       <div className={style.container}>
-        {moviesIsLoading ? (
+        {props.moviesIsLoading ? (
           <div>Loading...</div>
         ) : (
-          movies.map((movie) => (
+          props.searchResult.map((movie) => (
             <MovieCard
               key={movie.id}
               title={movie.title}

@@ -1,11 +1,14 @@
 import style from "./ResultsTopBar.module.css";
 import Button from "../../Button";
 
-const ResultsTopBar = () => {
+const ResultsTopBar = (props) => {
   return (
     <div className={style.resultsTopBar}>
       <div className={style.container}>
-        <div className={style.found}>7 movies found</div>
+        <div className={style.found}>
+          {props.foundMovies}&nbsp;
+          {props.foundMovies === 1 ? "movie" : "movies"}&nbsp;found
+        </div>
         <div className={style.sort}>
           <span>Sort by</span>
           <Button className={style.button}>release date</Button>
