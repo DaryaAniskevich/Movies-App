@@ -7,18 +7,30 @@ const Results = (props) => {
     <div className={style.results}>
       <ResultsTopBar foundMovies={props.foundMovies} />
       <div className={style.container}>
-        {props.moviesIsLoading ? (
-          <div>Loading...</div>
+        {!props.moviesIsLoading ? (
+          !props.searchStarted ? (
+            props.movies.map((movie) => (
+              <MovieCard
+                key={movie.id}
+                title={movie.title}
+                release={movie.release_date}
+                image={movie.poster_path}
+                genres={movie.genres}
+              />
+            ))
+          ) : (
+            props.searchResult.map((movie) => (
+              <MovieCard
+                key={movie.id}
+                title={movie.title}
+                release={movie.release_date}
+                image={movie.poster_path}
+                genres={movie.genres}
+              />
+            ))
+          )
         ) : (
-          props.searchResult.map((movie) => (
-            <MovieCard
-              key={movie.id}
-              title={movie.title}
-              release={movie.release_date}
-              image={movie.poster_path}
-              genres={movie.genres}
-            />
-          ))
+          <div>Loading...</div>
         )}
       </div>
     </div>
