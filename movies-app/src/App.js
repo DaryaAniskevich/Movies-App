@@ -24,7 +24,6 @@ const App = () => {
   useEffect(() => {
     dispatch(getMoviesData());
   }, [dispatch]);
-  console.log(searchValue);
 
   const [searchResult, setSearchResult] = useState([]);
   const findMovies = useCallback(() => {
@@ -60,6 +59,7 @@ const App = () => {
         searchResult={searchResult}
         moviesIsLoading={moviesIsLoading}
         foundMovies={searchResult.length}
+        setSearchResult={setSearchResult}
       />
       <Footer />
     </div>

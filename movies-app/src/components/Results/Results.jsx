@@ -5,7 +5,11 @@ import MovieCard from "./MovieCard";
 const Results = (props) => {
   return (
     <div className={style.results}>
-      <ResultsTopBar foundMovies={props.foundMovies} />
+      <ResultsTopBar
+        foundMovies={props.foundMovies}
+        searchResult={props.searchResult}
+        setSearchResult={props.setSearchResult}
+      />
       <div className={style.container}>
         {props.moviesIsLoading ? (
           <div>Loading...</div>
