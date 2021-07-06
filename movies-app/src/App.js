@@ -26,10 +26,12 @@ const App = () => {
   }, [dispatch]);
 
   const [searchResult, setSearchResult] = useState([]);
+  const [searchStarted, setSearchStarted] = useState(false);
   const findMovies = useCallback(() => {
+    setSearchStarted(true);
     let foundMovies = [];
-    if (searchValue.trim().length === 0) {
-      return setSearchResult([]);
+    if (searchValue.trim() === "") {
+      return setSearchResult(movies);
     } else {
       if (searchBy === "Title") {
         foundMovies = movies.filter((movie) => {
@@ -55,11 +57,12 @@ const App = () => {
         setSearchResult={setSearchResult}
       />
       <Results
+        searchStarted={searchStarted}
         movies={movies}
         searchResult={searchResult}
         moviesIsLoading={moviesIsLoading}
-        foundMovies={searchResult.length}
         setSearchResult={setSearchResult}
+        foundMovies={searchStarted ? searchResult.length : movies.length}
       />
       <Footer />
     </div>

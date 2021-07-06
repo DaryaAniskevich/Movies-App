@@ -9,6 +9,8 @@ import { searchSelector } from "../../store/selectors";
 const SearchForm = (props) => {
   const dispatch = useDispatch();
 
+  const searchValue = useSelector(searchSelector);
+
   const setSearchByForButton = useCallback(
     (e, filter) => {
       e.preventDefault();
@@ -24,7 +26,15 @@ const SearchForm = (props) => {
     },
     [dispatch]
   );
-  const searchValue = useSelector(searchSelector);
+
+  const onKeyPressHandler = useCallback(
+    (e) => {
+      if (e.code === "Enter") {
+        return props.findMovies();
+      }
+    },
+    [props]
+  );
   return (
     <div className={style.container}>
       <h1 className={style.header}>Find your movie</h1>
@@ -35,6 +45,7 @@ const SearchForm = (props) => {
           className={style.input}
           value={searchValue}
           onChange={(e) => dispatch(search(e.target.value))}
+          onKeyPress={(e) => onKeyPressHandler(e)}
         />
         <div className={style.buttons_container}>
           <div className={style.buttons_left}>
