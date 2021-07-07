@@ -10,7 +10,8 @@ const ResultsTopBar = (props) => {
 
   const sortValue = useSelector(sortSelector);
 
-  const [sortAscending, setSortAscending] = useState(null);
+  const [sortAscendingForDate, setSortAscendingForDate] = useState(true);
+  const [sortAscendingForRating, setSortAscendingForRating] = useState(true);
 
   const dateToNum = useCallback((d) => {
     d = d.split("-");
@@ -20,54 +21,61 @@ const ResultsTopBar = (props) => {
   const sortForDate = useCallback(
     (field) => {
       return (a, b) => {
-        if (sortAscending) {
+        if (sortAscendingForDate === true) {
           return dateToNum(b[field]) - dateToNum(a[field]);
-        } else {
+        } else if (sortAscendingForDate === false) {
           return dateToNum(a[field]) - dateToNum(b[field]);
         }
       };
     },
-    [sortAscending, dateToNum]
+    [sortAscendingForDate, dateToNum]
   );
 
   const sortForVote = useCallback(
     (field) => {
       return (a, b) => {
-        if (sortAscending) {
+        if (sortAscendingForRating === true) {
           return b[field] - a[field];
-        } else {
+        } else if (sortAscendingForRating === false) {
           return a[field] - b[field];
         }
       };
     },
-    [sortAscending]
+    [sortAscendingForRating]
   );
 
   const sortedResult = useCallback(
     (sortValue) => {
       dispatch(sortBy(sortValue));
-
       if (sortValue === "release_date") {
+        setSortAscendingForDate(!sortAscendingForDate);
         const sortedByDate = [...props.searchResult].sort(
           sortForDate(sortValue)
         );
-        setSortAscending(!sortAscending);
         return props.setSearchResult(sortedByDate);
       } else if (sortValue === "vote_average") {
+        setSortAscendingForRating(!sortAscendingForRating);
         const sortedByRating = [...props.searchResult].sort(
           sortForVote(sortValue)
         );
-        setSortAscending(!sortAscending);
         return props.setSearchResult(sortedByRating);
       }
     },
-    [dispatch, props, sortForDate, sortForVote, sortAscending]
+    [
+      dispatch,
+      props,
+      sortForDate,
+      sortForVote,
+      setSortAscendingForDate,
+      setSortAscendingForRating,
+      sortAscendingForDate,
+      sortAscendingForRating,
+    ]
   );
 
   const sortMovies = useCallback(
     (e, sortValue) => {
       e.preventDefault();
-      setSortAscending(true);
       return sortedResult(sortValue);
     },
     [sortedResult]
@@ -92,7 +100,7 @@ const ResultsTopBar = (props) => {
           >
             release date&nbsp;
             {sortValue === "release_date" ? (
-              sortAscending ? (
+              sortAscendingForDate ? (
                 <span>&uarr;</span>
               ) : (
                 <span>&darr;</span>
@@ -100,7 +108,9 @@ const ResultsTopBar = (props) => {
             ) : null}
           </Button>
           <Button
-            onClick={(e) => sortMovies(e, "vote_average")}
+            onClick={(e) => {
+              sortMovies(e, "vote_average");
+            }}
             className={
               sortValue === "vote_average"
                 ? `${style.button} ${style.button_active}`
@@ -109,7 +119,7 @@ const ResultsTopBar = (props) => {
           >
             rating&nbsp;
             {sortValue === "vote_average" ? (
-              sortAscending ? (
+              sortAscendingForRating ? (
                 <span>&uarr;</span>
               ) : (
                 <span>&darr;</span>

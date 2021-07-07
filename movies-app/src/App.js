@@ -11,6 +11,7 @@ import {
   searchSelector,
   searchBySelector,
 } from "./store/selectors";
+import { sortBy } from "./store/sortActions";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -19,25 +20,25 @@ const App = () => {
   const moviesIsLoading = useSelector(moviesIsLoadingSelector);
 
   const searchValue = useSelector(searchSelector);
-  const searchBy = useSelector(searchBySelector);
+  const searchByCategory = useSelector(searchBySelector);
 
   useEffect(() => {
     dispatch(getMoviesData());
   }, [dispatch]);
 
   const [searchResult, setSearchResult] = useState([]);
-  const [searchStarted, setSearchStarted] = useState(false);
+  const [searchDisabled, setSearchDisabled] = useState(false);
+
   const findMovies = useCallback(() => {
-    setSearchStarted(true);
     let foundMovies = [];
     if (searchValue.trim() === "") {
-      return setSearchResult(movies);
+      setSearchDisabled(true);
     } else {
-      if (searchBy === "Title") {
+      if (searchByCategory === "Title") {
         foundMovies = movies.filter((movie) => {
           return movie.title.toLowerCase().includes(searchValue.toLowerCase());
         });
-      } else if (searchBy === "Genre") {
+      } else if (searchByCategory === "Genre") {
         foundMovies = movies.filter((movie) => {
           return movie.genres
             .join(" ")
@@ -45,24 +46,24 @@ const App = () => {
             .includes(searchValue.toLowerCase());
         });
       }
+      dispatch(sortBy(null));
       return setSearchResult(foundMovies);
     }
-  }, [searchValue, searchBy, movies]);
+  }, [searchValue, searchByCategory, movies, dispatch]);
 
   return (
     <div>
       <Header
-        searchBy={searchBy}
         findMovies={findMovies}
         setSearchResult={setSearchResult}
+        searchDisabled={searchDisabled}
       />
       <Results
-        searchStarted={searchStarted}
         movies={movies}
         searchResult={searchResult}
         moviesIsLoading={moviesIsLoading}
         setSearchResult={setSearchResult}
-        foundMovies={searchStarted ? searchResult.length : movies.length}
+        foundMovies={searchResult.length}
       />
       <Footer />
     </div>

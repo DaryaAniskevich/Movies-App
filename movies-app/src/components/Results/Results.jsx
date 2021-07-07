@@ -11,30 +11,18 @@ const Results = (props) => {
         setSearchResult={props.setSearchResult}
       />
       <div className={style.container}>
-        {!props.moviesIsLoading ? (
-          !props.searchStarted ? (
-            props.movies.map((movie) => (
-              <MovieCard
-                key={movie.id}
-                title={movie.title}
-                release={movie.release_date}
-                image={movie.poster_path}
-                genres={movie.genres}
-              />
-            ))
-          ) : (
-            props.searchResult.map((movie) => (
-              <MovieCard
-                key={movie.id}
-                title={movie.title}
-                release={movie.release_date}
-                image={movie.poster_path}
-                genres={movie.genres}
-              />
-            ))
-          )
-        ) : (
+        {props.moviesIsLoading ? (
           <div>Loading...</div>
+        ) : (
+          props.searchResult.map((movie) => (
+            <MovieCard
+              key={movie.id}
+              title={movie.title}
+              release={movie.release_date}
+              image={movie.poster_path}
+              genres={movie.genres}
+            />
+          ))
         )}
       </div>
     </div>

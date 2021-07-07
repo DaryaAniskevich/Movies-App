@@ -4,12 +4,13 @@ import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { search } from "../../store/searchActions";
 import { searchBy } from "../../store/searchByActions";
-import { searchSelector } from "../../store/selectors";
+import { searchSelector, searchBySelector } from "../../store/selectors";
 
 const SearchForm = (props) => {
   const dispatch = useDispatch();
 
   const searchValue = useSelector(searchSelector);
+  const searchByCategory = useSelector(searchBySelector);
 
   const setSearchByForButton = useCallback(
     (e, filter) => {
@@ -30,11 +31,13 @@ const SearchForm = (props) => {
   const onKeyPressHandler = useCallback(
     (e) => {
       if (e.code === "Enter") {
+        dispatch(search(""));
         return props.findMovies();
       }
     },
-    [props]
+    [props, dispatch]
   );
+
   return (
     <div className={style.container}>
       <h1 className={style.header}>Find your movie</h1>
@@ -46,6 +49,7 @@ const SearchForm = (props) => {
           value={searchValue}
           onChange={(e) => dispatch(search(e.target.value))}
           onKeyPress={(e) => onKeyPressHandler(e)}
+          disabled={props.searchDisabled ? true : false}
         />
         <div className={style.buttons_container}>
           <div className={style.buttons_left}>
@@ -55,7 +59,7 @@ const SearchForm = (props) => {
             <Button
               onClick={(e) => setSearchByForButton(e, "Title")}
               className={
-                props.searchBy === "Title"
+                searchByCategory === "Title"
                   ? `${style.button} ${style.button_active}`
                   : style.button
               }
@@ -65,7 +69,7 @@ const SearchForm = (props) => {
             <Button
               onClick={(e) => setSearchByForButton(e, "Genre")}
               className={
-                props.searchBy === "Genre"
+                searchByCategory === "Genre"
                   ? `${style.button} ${style.button_active}`
                   : style.button
               }

@@ -9,9 +9,9 @@ const Header = (props) => {
         <Logo />
         <SearchForm
           setValue={props.setValue}
-          searchBy={props.searchBy}
           setSearchBy={props.setSearchBy}
           findMovies={props.findMovies}
+          searchDisabled={props.searchDisabled}
         />
       </div>
     </div>
