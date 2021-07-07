@@ -21,6 +21,9 @@ const Results = (props) => {
               release={movie.release_date}
               image={movie.poster_path}
               genres={movie.genres}
+              overview={movie.overview}
+              budget={movie.budget}
+              rating={movie.vote_average}
             />
           ))
         )}
