@@ -7,12 +7,7 @@ const Header = (props) => {
     <div className={style.header}>
       <div className={style.container}>
         <Logo />
-        <SearchForm
-          setValue={props.setValue}
-          setSearchBy={props.setSearchBy}
-          findMovies={props.findMovies}
-          searchDisabled={props.searchDisabled}
-        />
+        <SearchForm searchMovies={props.searchMovies} />
       </div>
     </div>
   );

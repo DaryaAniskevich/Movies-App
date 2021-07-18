@@ -1,20 +1,21 @@
 import style from "./Results.module.css";
 import ResultsTopBar from "./ResultsTopBar";
 import MovieCard from "./MovieCard";
+import { useSelector } from "react-redux";
+import { moviesSelector, moviesIsLoadingSelector } from "../../store/selectors";
 
 const Results = (props) => {
+  const movies = useSelector(moviesSelector);
+  const moviesIsLoading = useSelector(moviesIsLoadingSelector);
+
   return (
     <div className={style.results}>
-      <ResultsTopBar
-        foundMovies={props.foundMovies}
-        searchResult={props.searchResult}
-        setSearchResult={props.setSearchResult}
-      />
+      <ResultsTopBar searchMovies={props.searchMovies} />
       <div className={style.container}>
-        {props.moviesIsLoading ? (
+        {moviesIsLoading ? (
           <div>Loading...</div>
         ) : (
-          props.searchResult.map((movie) => (
+          movies.map((movie) => (
             <MovieCard
               key={movie.id}
               title={movie.title}

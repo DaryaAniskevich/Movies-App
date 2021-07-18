@@ -11,11 +11,9 @@ export const setMovies = (movies) => ({
   payload: movies,
 });
 
-export const getMoviesData = () => async (dispatch) => {
+export const getMoviesData = (url) => async (dispatch) => {
   dispatch(moviesIsLoading(true));
-  const movies = await fetch("https://reactjs-cdp.herokuapp.com/movies").then(
-    (result) => result.json()
-  );
+  const movies = await fetch(url).then((result) => result.json());
   dispatch(setMovies(movies.data));
   dispatch(moviesIsLoading(false));
 };

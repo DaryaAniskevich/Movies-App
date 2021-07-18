@@ -10,12 +10,12 @@ const SearchForm = (props) => {
   const dispatch = useDispatch();
 
   const searchValue = useSelector(searchSelector);
-  const searchByCategory = useSelector(searchBySelector);
+  const searchCategory = useSelector(searchBySelector);
 
-  const setSearchByForButton = useCallback(
+  const setSearchCategory = useCallback(
     (e, filter) => {
       e.preventDefault();
-      return dispatch(searchBy(filter));
+      dispatch(searchBy(filter));
     },
     [dispatch]
   );
@@ -23,19 +23,29 @@ const SearchForm = (props) => {
   const searchMovie = useCallback(
     (e) => {
       e.preventDefault();
-      return dispatch(search(""));
+      if (searchValue.trim() === "") {
+        dispatch(search(""));
+        return;
+      }
+      dispatch(search(""));
+      props.searchMovies();
     },
-    [dispatch]
+    [dispatch, props, searchValue]
   );
 
   const onKeyPressHandler = useCallback(
     (e) => {
+      if (searchValue.trim() === "") {
+        dispatch(search(""));
+        return;
+      }
       if (e.code === "Enter") {
         dispatch(search(""));
-        return props.findMovies();
+        props.searchMovies();
+        e.preventDefault();
       }
     },
-    [props, dispatch]
+    [dispatch, props, searchValue]
   );
 
   return (
@@ -49,7 +59,6 @@ const SearchForm = (props) => {
           value={searchValue}
           onChange={(e) => dispatch(search(e.target.value))}
           onKeyPress={(e) => onKeyPressHandler(e)}
-          disabled={props.searchDisabled ? true : false}
         />
         <div className={style.buttons_container}>
           <div className={style.buttons_left}>
@@ -57,9 +66,9 @@ const SearchForm = (props) => {
               Search by
             </h2>
             <Button
-              onClick={(e) => setSearchByForButton(e, "Title")}
+              onClick={(e) => setSearchCategory(e, "title")}
               className={
-                searchByCategory === "Title"
+                searchCategory === "title"
                   ? `${style.button} ${style.button_active}`
                   : style.button
               }
@@ -67,9 +76,9 @@ const SearchForm = (props) => {
               Title
             </Button>
             <Button
-              onClick={(e) => setSearchByForButton(e, "Genre")}
+              onClick={(e) => setSearchCategory(e, "genres")}
               className={
-                searchByCategory === "Genre"
+                searchCategory === "genres"
                   ? `${style.button} ${style.button_active}`
                   : style.button
               }
@@ -80,7 +89,6 @@ const SearchForm = (props) => {
           <div className={style.buttons_right}>
             <Button
               type="submit"
-              onClick={props.findMovies}
               className={`${style.button} ${style.button_search}`}
             >
               Search

@@ -5,3 +5,4 @@ export const searchSelector = (state) => state.search.value;
 export const searchBySelector = (state) => state.searchBy.searchBy;
 
 export const sortSelector = (state) => state.sortBy.sortBy;
+export const sortOrderSelector = (state) => state.sortOrder.sortOrder;

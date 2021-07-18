@@ -1,7 +1,7 @@
 import { SEARCH_BY } from "./searchByActions";
 
 const initialState = {
-  searchBy: "Title",
+  searchBy: "title",
 };
 const searchByReducer = (state = initialState, action) => {
   switch (action.type) {
