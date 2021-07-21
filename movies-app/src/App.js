@@ -1,46 +1,31 @@
-import "./App.css";
+import style from "./App.module.css";
 import Header from "./components/Header";
-import Results from "./components/Results";
+import GetMoviesResult from "./components/Results/GetMoviesResult";
 import Footer from "./components/Footer";
-import { useCallback, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  searchSelector,
-  searchBySelector,
-  sortSelector,
-  sortOrderSelector,
-} from "./store/selectors";
-import { getMoviesData } from "./store/moviesActions";
+import SearchResult from "./components/Results/SearchResult";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import ErrorMessage from "./components/ErrorMessage";
+import Modal from "./components/Modal";
 
 const App = () => {
-  const dispatch = useDispatch();
-
-  const searchValue = useSelector(searchSelector);
-  const searchCategory = useSelector(searchBySelector);
-
-  const sortCategory = useSelector(sortSelector);
-  const sortOrder = useSelector(sortOrderSelector);
-
-  useEffect(() => {
-    dispatch(
-      getMoviesData(`https://reactjs-cdp.herokuapp.com/movies?limit=12`)
-    );
-  }, [dispatch]);
-
-  const searchMovies = useCallback(() => {
-    dispatch(
-      getMoviesData(
-        `https://reactjs-cdp.herokuapp.com/movies?searchBy=${searchCategory}&search=${searchValue}&sortBy=${sortCategory}&sortOrder=${sortOrder}&limit=30`
-      )
-    );
-  }, [dispatch, searchCategory, searchValue, sortCategory, sortOrder]);
-
   return (
-    <div>
-      <Header searchMovies={searchMovies} />
-      <Results searchMovies={searchMovies} />
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <div className={style.container}>
+        <Header />
+        <Switch>
+          <Route exact path={["/", "/movies"]} component={GetMoviesResult} />
+          <Route
+            exact
+            path="/movies/searchBy/:searchCategory/search/:searchValue"
+            component={SearchResult}
+          />
+          <Route exact path="/movies/:movieId" component={Modal} />
+          <Route path="/error" component={ErrorMessage} />
+          <Redirect to="/error" />
+        </Switch>
+        <Footer />
+      </div>
+    </BrowserRouter>
   );
 };
 

@@ -5,8 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { search } from "../../store/searchActions";
 import { searchBy } from "../../store/searchByActions";
 import { searchSelector, searchBySelector } from "../../store/selectors";
+import { useHistory } from "react-router-dom";
 
-const SearchForm = (props) => {
+const SearchForm = () => {
+  const { push } = useHistory();
+
   const dispatch = useDispatch();
 
   const searchValue = useSelector(searchSelector);
@@ -27,10 +30,10 @@ const SearchForm = (props) => {
         dispatch(search(""));
         return;
       }
+      push(`/movies/searchBy/${searchCategory}/search/${searchValue}`);
       dispatch(search(""));
-      props.searchMovies();
     },
-    [dispatch, props, searchValue]
+    [dispatch, push, searchCategory, searchValue]
   );
 
   const onKeyPressHandler = useCallback(
@@ -40,12 +43,12 @@ const SearchForm = (props) => {
         return;
       }
       if (e.code === "Enter") {
+        push(`/movies/searchBy/${searchCategory}/search/${searchValue}`);
         dispatch(search(""));
-        props.searchMovies();
         e.preventDefault();
       }
     },
-    [dispatch, props, searchValue]
+    [dispatch, push, searchValue, searchCategory]
   );
 
   return (
@@ -86,6 +89,7 @@ const SearchForm = (props) => {
               Genre
             </Button>
           </div>
+
           <div className={style.buttons_right}>
             <Button
               type="submit"

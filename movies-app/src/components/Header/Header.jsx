@@ -7,7 +7,7 @@ const Header = (props) => {
     <div className={style.header}>
       <div className={style.container}>
         <Logo />
-        <SearchForm searchMovies={props.searchMovies} />
+        <SearchForm />
       </div>
     </div>
   );

@@ -4,17 +4,21 @@ import { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   sortSelector,
-  moviesSelector,
+  getMoviesSelector,
   sortOrderSelector,
+  searchMoviesSelector,
+  searchDoneSelector,
 } from "../../../store/selectors";
 import { sortBy } from "../../../store/sortActions";
 import { setSortOrder } from "../../../store/sortOrderActions";
-import { setMovies } from "../../../store/moviesActions";
+import { setMovies } from "../../../store/getMoviesActions";
+import { setFoundMovies } from "../../../store/searchMoviesActions";
 
 const ResultsTopBar = () => {
   const dispatch = useDispatch();
-  const movies = useSelector(moviesSelector);
-
+  const movies = useSelector(getMoviesSelector);
+  const foundMovies = useSelector(searchMoviesSelector);
+  const searchDone = useSelector(searchDoneSelector);
   const sortCategory = useSelector(sortSelector);
   const sortOrder = useSelector(sortOrderSelector);
 
@@ -53,14 +57,26 @@ const ResultsTopBar = () => {
     (sortCategory) => {
       dispatch(sortBy(sortCategory));
       if (sortCategory === "release_date") {
-        const sortedByDate = [...movies].sort(sortForDate(sortCategory));
-        dispatch(setMovies(sortedByDate));
+        let sortedByDate = [];
+        if (foundMovies.length > 0) {
+          sortedByDate = [...foundMovies].sort(sortForDate(sortCategory));
+          dispatch(setFoundMovies(sortedByDate));
+        } else {
+          sortedByDate = [...movies].sort(sortForDate(sortCategory));
+          dispatch(setMovies(sortedByDate));
+        }
       } else if (sortCategory === "vote_average") {
-        const sortedByRating = [...movies].sort(sortForVote(sortCategory));
-        dispatch(setMovies(sortedByRating));
+        let sortedByRating = [];
+        if (foundMovies.length > 0) {
+          sortedByRating = [...foundMovies].sort(sortForVote(sortCategory));
+          dispatch(setFoundMovies(sortedByRating));
+        } else {
+          sortedByRating = [...movies].sort(sortForVote(sortCategory));
+          dispatch(setMovies(sortedByRating));
+        }
       }
     },
-    [dispatch, sortForDate, sortForVote, movies]
+    [dispatch, sortForDate, sortForVote, movies, foundMovies]
   );
 
   const sortMovies = useCallback(
@@ -79,8 +95,10 @@ const ResultsTopBar = () => {
     <div className={style.resultsTopBar}>
       <div className={style.container}>
         <div className={style.found}>
-          {movies.length}&nbsp;
-          {movies.length === 1 ? "movie" : "movies"}&nbsp;found
+          {searchDone === true ? foundMovies.length : movies.length}
+          &nbsp;
+          {foundMovies.length === 1 ? "movie" : "movies"}
+          &nbsp;found
         </div>
         <div className={style.sort}>
           <span>Sort by</span>

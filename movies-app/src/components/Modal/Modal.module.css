@@ -1,3 +1,12 @@
+.container {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 140px 0 80px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 50px;
+}
+
 .modal {
   width: 100vw;
   height: 100vw;
@@ -7,15 +16,7 @@
   left: 0;
   display: flex;
   justify-content: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: 0.5s;
   z-index: 100;
-}
-
-.active {
-  opacity: 1;
-  pointer-events: all;
 }
 
 .wrapper {

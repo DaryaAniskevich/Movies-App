@@ -1,11 +1,11 @@
-import { setMoviesType, moviesIsLoadingType } from "./moviesActions";
+import { setMoviesType, moviesIsLoadingType } from "./getMoviesActions";
 
 const initialState = {
   movies: [],
   isLoading: false,
 };
 
-const moviesReducer = (state = initialState, action) => {
+const getMoviesReducer = (state = initialState, action) => {
   switch (action.type) {
     case setMoviesType: {
       return {
@@ -25,4 +25,4 @@ const moviesReducer = (state = initialState, action) => {
   }
 };
 
-export default moviesReducer;
+export default getMoviesReducer;
