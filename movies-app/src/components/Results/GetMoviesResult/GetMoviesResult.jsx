@@ -9,7 +9,7 @@ import {
 } from "../../../store/selectors";
 import ResultsTopBar from "../ResultsTopBar";
 import { useEffect, useState, useMemo, useCallback } from "react";
-import { getMoviesData } from "../../../store/getMoviesActions";
+import { getMoviesData } from "../../../store/getMovies/getMoviesActions";
 import { useDispatch } from "react-redux";
 import Loader from "../../Loader";
 import Button from "../../Button";

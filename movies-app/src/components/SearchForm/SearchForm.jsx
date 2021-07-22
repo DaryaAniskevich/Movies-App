@@ -2,8 +2,8 @@ import style from "./SearchForm.module.css";
 import Button from "../Button";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { search } from "../../store/searchActions";
-import { searchBy } from "../../store/searchByActions";
+import { search } from "../../store/search/searchActions";
+import { searchBy } from "../../store/searchBy/searchByActions";
 import { searchSelector, searchBySelector } from "../../store/selectors";
 import { useHistory } from "react-router-dom";
 

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useParams } from "react-router";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { movieDetailsGetData } from "../../store/movieDetailsActions";
+import { movieDetailsGetData } from "../../store/movieDetails/movieDetailsActions";
 import {
   movieDetailsSelector,
   searchDoneSelector,
@@ -12,7 +12,7 @@ import {
   getMoviesSelector,
 } from "../../store/selectors";
 import { Link } from "react-router-dom";
-import { setSearchDone } from "../../store/searchMoviesActions";
+import { setSearchDone } from "../../store/searchMovies/searchMoviesActions";
 import MovieCard from "../Results/MovieCard";
 
 const ModalContent = styled.div`

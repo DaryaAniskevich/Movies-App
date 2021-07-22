@@ -1,11 +1,11 @@
 import { combineReducers } from "redux";
-import getMoviesReducer from "./getMoviesReducer";
-import searchMoviesReducer from "./searchMoviesReducer";
-import searchReducer from "./searchReducer";
-import searchByReducer from "./searchByReducer";
-import sortReducer from "./sortReducer";
-import sortOrderReducer from "./sortOrderReducer";
-import movieDetailsReducer from "./movieDetailsReducer";
+import getMoviesReducer from "./getMovies/getMoviesReducer";
+import searchMoviesReducer from "./searchMovies/searchMoviesReducer";
+import searchReducer from "./search/searchReducer";
+import searchByReducer from "./searchBy/searchByReducer";
+import sortReducer from "./sort/sortReducer";
+import sortOrderReducer from "./sortOrder/sortOrderReducer";
+import movieDetailsReducer from "./movieDetails/movieDetailsReducer";
 
 const rootReducer = combineReducers({
   getMovies: getMoviesReducer,

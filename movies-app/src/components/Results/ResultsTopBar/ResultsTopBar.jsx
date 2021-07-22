@@ -9,10 +9,10 @@ import {
   searchMoviesSelector,
   searchDoneSelector,
 } from "../../../store/selectors";
-import { sortBy } from "../../../store/sortActions";
-import { setSortOrder } from "../../../store/sortOrderActions";
-import { setMovies } from "../../../store/getMoviesActions";
-import { setFoundMovies } from "../../../store/searchMoviesActions";
+import { sortBy } from "../../../store/sort/sortActions";
+import { setSortOrder } from "../../../store/sortOrder/sortOrderActions";
+import { setMovies } from "../../../store/getMovies/getMoviesActions";
+import { setFoundMovies } from "../../../store/searchMovies/searchMoviesActions";
 
 const ResultsTopBar = () => {
   const dispatch = useDispatch();

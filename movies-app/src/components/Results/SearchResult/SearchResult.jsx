@@ -9,7 +9,7 @@ import {
 } from "../../../store/selectors";
 import { useParams } from "react-router-dom";
 import { useEffect, useState, useMemo, useCallback } from "react";
-import { searchMoviesData } from "../../../store/searchMoviesActions";
+import { searchMoviesData } from "../../../store/searchMovies/searchMoviesActions";
 import ResultsTopBar from "../ResultsTopBar";
 import Loader from "../../Loader";
 import Button from "../../Button";
@@ -76,15 +76,19 @@ const SearchResult = () => {
               />
             ))}
           </div>
-          <div className={style.buttonContainer}>
-            <Button
-              className={style.buttonShow}
-              onClick={showMore}
-              disabled={disabled}
-            >
-              Show more
-            </Button>
-          </div>
+          {foundMovies.length > 0 ? (
+            foundMovies.length >= 12 ? (
+              <div className={style.buttonContainer}>
+                <Button
+                  className={style.buttonShow}
+                  onClick={showMore}
+                  disabled={disabled}
+                >
+                  Show more
+                </Button>
+              </div>
+            ) : null
+          ) : null}
         </div>
       )}
     </div>
