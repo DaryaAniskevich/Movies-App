@@ -8,10 +8,12 @@ import {
   sortOrderSelector,
 } from "../../../store/selectors";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { searchMoviesData } from "../../../store/searchMoviesActions";
 import ResultsTopBar from "../ResultsTopBar";
 import Loader from "../../Loader";
+import Button from "../../Button";
+
 const SearchResult = () => {
   const dispatch = useDispatch();
 
@@ -22,12 +24,33 @@ const SearchResult = () => {
 
   useEffect(() => {
     dispatch(
-      searchMoviesData(searchCategory, searchValue, sortCategory, sortOrder, 30)
+      searchMoviesData(
+        searchCategory,
+        searchValue,
+        sortCategory,
+        sortOrder,
+        100
+      )
     );
   }, [dispatch, searchCategory, searchValue, sortCategory, sortOrder]);
 
   const foundMovies = useSelector(searchMoviesSelector);
   const foundMoviesIsLoading = useSelector(foundMoviesIsLoadingSelector);
+
+  const [numberOfShown, setNumberOfShown] = useState(12);
+  const shownMovies = useMemo(() => {
+    return foundMovies.slice(0, numberOfShown);
+  }, [foundMovies, numberOfShown]);
+
+  let disabled = false;
+  if (shownMovies.length >= foundMovies.length) {
+    disabled = true;
+  }
+
+  const showMore = useCallback(
+    () => setNumberOfShown(numberOfShown + 12),
+    [numberOfShown]
+  );
 
   return (
     <div className={style.results}>
@@ -38,19 +61,30 @@ const SearchResult = () => {
         </div>
       ) : (
         <div className={style.container}>
-          {foundMovies.map((movie) => (
-            <MovieCard
-              key={movie.id}
-              title={movie.title}
-              release={movie.release_date}
-              image={movie.poster_path}
-              genres={movie.genres}
-              overview={movie.overview}
-              budget={movie.budget}
-              rating={movie.vote_average}
-              id={movie.id}
-            />
-          ))}
+          <div className={style.grid}>
+            {shownMovies.map((movie) => (
+              <MovieCard
+                key={movie.id}
+                title={movie.title}
+                release={movie.release_date}
+                image={movie.poster_path}
+                genres={movie.genres}
+                overview={movie.overview}
+                budget={movie.budget}
+                rating={movie.vote_average}
+                id={movie.id}
+              />
+            ))}
+          </div>
+          <div className={style.buttonContainer}>
+            <Button
+              className={style.buttonShow}
+              onClick={showMore}
+              disabled={disabled}
+            >
+              Show more
+            </Button>
+          </div>
         </div>
       )}
     </div>

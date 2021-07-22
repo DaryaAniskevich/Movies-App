@@ -8,10 +8,12 @@ import {
   sortOrderSelector,
 } from "../../../store/selectors";
 import ResultsTopBar from "../ResultsTopBar";
-import { useEffect } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { getMoviesData } from "../../../store/getMoviesActions";
 import { useDispatch } from "react-redux";
 import Loader from "../../Loader";
+import Button from "../../Button";
+
 const GetMoviesResult = () => {
   const movies = useSelector(getMoviesSelector);
   const moviesIsLoading = useSelector(moviesIsLoadingSelector);
@@ -22,8 +24,23 @@ const GetMoviesResult = () => {
   const sortOrder = useSelector(sortOrderSelector);
 
   useEffect(() => {
-    dispatch(getMoviesData(sortCategory, sortOrder));
+    dispatch(getMoviesData(sortCategory, sortOrder, 100));
   }, [dispatch, sortCategory, sortOrder]);
+
+  const [numberOfShown, setNumberOfShown] = useState(12);
+  const shownMovies = useMemo(() => {
+    return movies.slice(0, numberOfShown);
+  }, [movies, numberOfShown]);
+
+  let disabled = false;
+  if (shownMovies.length >= movies.length) {
+    disabled = true;
+  }
+
+  const showMore = useCallback(
+    () => setNumberOfShown(numberOfShown + 12),
+    [numberOfShown]
+  );
 
   return (
     <div className={style.results}>
@@ -34,19 +51,30 @@ const GetMoviesResult = () => {
         </div>
       ) : (
         <div className={style.container}>
-          {movies.map((movie) => (
-            <MovieCard
-              key={movie.id}
-              title={movie.title}
-              release={movie.release_date}
-              image={movie.poster_path}
-              genres={movie.genres}
-              overview={movie.overview}
-              budget={movie.budget}
-              rating={movie.vote_average}
-              id={movie.id}
-            />
-          ))}
+          <div className={style.grid}>
+            {shownMovies.map((movie) => (
+              <MovieCard
+                key={movie.id}
+                title={movie.title}
+                release={movie.release_date}
+                image={movie.poster_path}
+                genres={movie.genres}
+                overview={movie.overview}
+                budget={movie.budget}
+                rating={movie.vote_average}
+                id={movie.id}
+              />
+            ))}
+          </div>
+          <div className={style.buttonContainer}>
+            <Button
+              className={style.buttonShow}
+              onClick={showMore}
+              disabled={disabled}
+            >
+              Show more
+            </Button>
+          </div>
         </div>
       )}
     </div>
