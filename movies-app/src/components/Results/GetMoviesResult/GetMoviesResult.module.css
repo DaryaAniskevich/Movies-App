@@ -1,5 +1,6 @@
 .results {
   background-color: var(--main-white-color);
+  min-height: 80vh;
 }
 
 .container {
@@ -9,6 +10,12 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 50px;
+}
+
+.myLoader {
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
 }
 
 @media screen and (max-width: 991px) {

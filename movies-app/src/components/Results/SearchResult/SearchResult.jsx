@@ -11,6 +11,7 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { searchMoviesData } from "../../../store/searchMoviesActions";
 import ResultsTopBar from "../ResultsTopBar";
+import Loader from "../../Loader";
 const SearchResult = () => {
   const dispatch = useDispatch();
 
@@ -31,11 +32,13 @@ const SearchResult = () => {
   return (
     <div className={style.results}>
       <ResultsTopBar />
-      <div className={style.container}>
-        {foundMoviesIsLoading ? (
-          <div>Loading...</div>
-        ) : (
-          foundMovies.map((movie) => (
+      {foundMoviesIsLoading ? (
+        <div className={style.loader}>
+          <Loader />
+        </div>
+      ) : (
+        <div className={style.container}>
+          {foundMovies.map((movie) => (
             <MovieCard
               key={movie.id}
               title={movie.title}
@@ -47,9 +50,9 @@ const SearchResult = () => {
               rating={movie.vote_average}
               id={movie.id}
             />
-          ))
-        )}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

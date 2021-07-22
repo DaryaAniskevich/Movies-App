@@ -11,7 +11,7 @@ import ResultsTopBar from "../ResultsTopBar";
 import { useEffect } from "react";
 import { getMoviesData } from "../../../store/getMoviesActions";
 import { useDispatch } from "react-redux";
-
+import Loader from "../../Loader";
 const GetMoviesResult = () => {
   const movies = useSelector(getMoviesSelector);
   const moviesIsLoading = useSelector(moviesIsLoadingSelector);
@@ -28,11 +28,13 @@ const GetMoviesResult = () => {
   return (
     <div className={style.results}>
       <ResultsTopBar />
-      <div className={style.container}>
-        {moviesIsLoading ? (
-          <div>Loading...</div>
-        ) : (
-          movies.map((movie) => (
+      {moviesIsLoading ? (
+        <div className={style.myLoader}>
+          <Loader />
+        </div>
+      ) : (
+        <div className={style.container}>
+          {movies.map((movie) => (
             <MovieCard
               key={movie.id}
               title={movie.title}
@@ -44,9 +46,9 @@ const GetMoviesResult = () => {
               rating={movie.vote_average}
               id={movie.id}
             />
-          ))
-        )}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
