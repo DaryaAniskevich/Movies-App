@@ -21,7 +21,7 @@
   color: var(--main-white-color);
   outline: none;
   margin-bottom: 20px;
-  background-image: url("./arrow.svg");
+  background-image: url("../../images/arrow.svg");
   background-size: 25px;
   background-repeat: no-repeat;
   background-position: 99% 50%;
@@ -94,4 +94,18 @@
 .button_search:active {
   color: var(--main-white-color);
   background-color: var(--main-red-color);
+}
+
+@media screen and (max-width: 500px) {
+  .button_search {
+    font-size: 0px;
+    background-image: url("../../images/search.png");
+    background-repeat: no-repeat;
+    background-size: 20px;
+    background-position: center;
+    padding: 6px 20px;
+  }
+  .buttons_container {
+    justify-content: space-around;
+  }
 }

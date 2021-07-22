@@ -16,9 +16,7 @@ import { setSearchDone } from "../../store/searchMoviesActions";
 import MovieCard from "../Results/MovieCard";
 
 const ModalContent = styled.div`
-  width: 550px;
-  min-height: 350px;
-  height: 100%;
+  height: 350px;
   background-color: black;
   background-image: url(${(props) => props.image});
   background-repeat: no-repeat;
@@ -45,7 +43,7 @@ const Modal = () => {
   let genres = "";
   for (let genre in movieDetails.genres) {
     if (genre < movieDetails.genres.length - 1) {
-      genres += `${movieDetails.genres[genre]} & `;
+      genres += `${movieDetails.genres[genre]} - `;
     } else {
       genres += movieDetails.genres[genre];
     }
@@ -104,16 +102,23 @@ const Modal = () => {
               <p className={style.genres}>{genres}</p>
               <p className={style.description}>{movieDetails.overview}</p>
               <p className={style.description}>
-                Rating:{" "}
-                {movieDetails.vote_average === 0
-                  ? "unknown"
-                  : movieDetails.vote_average}
+                {`Runtime: ${movieDetails.runtime} min.`}
               </p>
               <p className={style.description}>
-                Budget:{" "}
-                {movieDetails.budget === 0
-                  ? "unknown"
-                  : `$${movieDetails.budget}`}
+                {`Rating:
+                ${
+                  movieDetails.vote_average === 0
+                    ? "unknown"
+                    : movieDetails.vote_average
+                }`}
+              </p>
+              <p className={style.description}>
+                {`Budget:
+                ${
+                  movieDetails.budget === 0
+                    ? "unknown"
+                    : `$${movieDetails.budget}`
+                }`}
               </p>
             </div>
           </ModalContent>

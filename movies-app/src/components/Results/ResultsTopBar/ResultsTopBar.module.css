@@ -41,3 +41,22 @@
 .button_active {
   color: var(--main-red-color);
 }
+
+@media screen and (max-width: 500px) {
+  .container {
+    font-size: 18px;
+    line-height: 18px;
+  }
+  .button {
+    font-size: 18px;
+    line-height: 18px;
+  }
+  .sortTitle {
+    display: none;
+  }
+  .sort {
+    max-width: 160px;
+    margin-left: 10px;
+    align-items: center;
+  }
+}

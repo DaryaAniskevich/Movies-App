@@ -16,6 +16,9 @@ const MovieCard = (props) => {
       <div className={style.card}>
         <div className={style.imageBlock}>
           <img src={props.image} alt={props.title} className={style.image} />
+          {props.rating ? (
+            <span className={style.rating}>{props.rating}</span>
+          ) : null}
         </div>
         <div className={style.description}>
           <div className={style.titleBlock}>
@@ -23,7 +26,7 @@ const MovieCard = (props) => {
             <div className={style.ganre}>{genres}</div>
           </div>
           <div className={style.releaseBlock}>
-            <div className={style.release}>{props.release}</div>
+            <div className={style.release}>{props.release.slice(0, 4)}</div>
           </div>
         </div>
       </div>

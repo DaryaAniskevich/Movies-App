@@ -101,7 +101,7 @@ const ResultsTopBar = () => {
           &nbsp;found
         </div>
         <div className={style.sort}>
-          <span>Sort by</span>
+          <span className={style.sortTitle}>Sort by</span>
           <Button
             onClick={(e) => sortMovies(e, "release_date")}
             className={

@@ -13,6 +13,7 @@ body {
   font-size: 20px;
   line-height: 20px;
   color: var(--main-black-color);
+  min-height: 100vh;
 }
 
 code {
